@@ -1,8 +1,10 @@
 # Makefile
-.PHONY: up down exec
+.PHONY: build up down exec
+
+build:
+	docker compose build
 
 up:
-	docker compose build
 	docker compose up -d
 
 down:
