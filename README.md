@@ -1,6 +1,6 @@
 # my-docker-sandbox
 
-[Docker Sandbox](https://docs.docker.com/ai/sandbox/) 上で Claude Code を動かすための開発環境です。  
+[Docker Sandbox](https://docs.docker.com/ai/sandboxes/) 上で Claude Code を動かすための開発環境です。  
 `docker/sandbox-templates:claude-code` をベースに zsh と dotfiles を追加したカスタムテンプレートをビルドし、`sbx` CLI でコンテナを起動します。
 
 ## セットアップ
@@ -15,11 +15,14 @@ sbx login
 
 ### 2. テンプレートイメージのビルド
 
+> [!WARNING]
+> Makefile に `DOCKER_HUB_USERNAME` をハードコードしています。自分の環境で使う場合は、Makefile 先頭を自分の Docker Hub ユーザー名に書き換えてください。
+
 ```bash
 make build
 ```
 
-Docker Hub（`eycjur/claude-sandbox`）へ push されます。
+Docker Hub（`<DOCKER_HUB_USERNAME>/claude-sandbox`）へ push されます。
 
 ## 使い方
 
