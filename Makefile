@@ -1,15 +1,34 @@
 # Makefile
-.PHONY: build up down exec
+.PHONY: build run start stop rm exec
+
+DOCKER_HUB_USERNAME=eycjur
+IMAGE_NAME=claude-sandbox
+CONTAINER_NAME=$(shell basename $(CURDIR))
 
 build:
-	docker compose build
+	docker build \
+		--no-cache \
+		-t $(DOCKER_HUB_USERNAME)/$(IMAGE_NAME) \
+		--push \
+		.
 
-up:
-	docker compose up -d
+run:
+	sbx run \
+		--name $(CONTAINER_NAME) \
+		--template $(DOCKER_HUB_USERNAME)/$(IMAGE_NAME) \
+		shell \
+		-- \
+			-l -c 'exec zsh -l'
 
-down:
-	docker compose down
+start:
+	sbx run $(CONTAINER_NAME) -- -l -c 'exec zsh -l'
+
+stop:
+	sbx stop $(CONTAINER_NAME)
+
+rm:
+	sbx rm $(CONTAINER_NAME)
 
 exec:
-	docker compose exec -it sandbox zsh
-
+	# 実行後にカレントディレクトリを移動する: cd $$WORKSPACE_DIR
+	sbx exec -it $(CONTAINER_NAME) zsh

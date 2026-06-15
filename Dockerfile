@@ -1,21 +1,7 @@
-# Dockerfile
-FROM python:3.13-slim
+FROM docker/sandbox-templates:claude-code
+USER root
+RUN apt-get update && apt-get install -y zsh \
+    && chsh -s /bin/zsh agent
 
-RUN apt-get update && apt-get install -y \
-    curl git sudo vim zsh \
-    && curl -fsSL https://claude.ai/install.sh | bash \
-    && chsh -s /bin/zsh
-
-ENV PATH="/root/.local/bin:$PATH"
-ENV SHELL=/bin/zsh
-# to allow dangerously-skip-permissions with root
-ENV IS_SANDBOX=1
-
-WORKDIR /workspace
-
-RUN pip install --no-cache-dir \
-    numpy \
-    pandas
-
+USER agent
 RUN curl -sSL https://raw.githubusercontent.com/eycjur/dotfiles/main/remote-install.sh | zsh
-

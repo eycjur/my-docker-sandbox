@@ -1,9 +1,19 @@
 # Docker-based simple Sandbox
 
 ## Quick Start
+
+Install docker sandbox
+
 ```bash
-make up
-make exec
-claude --dangerously-skip-permissions
+brew trust --cask docker/tap/sbx@nightly
+brew install docker/tap/sbx
+sbx login
 ```
 
+Start Sandbox
+
+```shell
+make build
+make run
+claude --dangerously-skip-permissions
+```
