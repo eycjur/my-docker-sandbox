@@ -1,6 +1,7 @@
 FROM ubuntu:26.04
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV IS_SANDBOX=1
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
@@ -26,7 +27,8 @@ ENV PATH=/home/agent/.local/bin:/usr/bin:/bin
 WORKDIR /home/agent
 
 USER agent
-RUN curl -fsSL https://claude.ai/install.sh | bash \
+RUN mkdir -p /home/agent/workspace \
+	&& curl -fsSL https://claude.ai/install.sh | bash \
 	&& curl -sSL https://raw.githubusercontent.com/eycjur/dotfiles/main/remote-install.sh | zsh
 
 CMD ["zsh", "-l"]

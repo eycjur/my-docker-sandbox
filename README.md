@@ -30,9 +30,23 @@ make run
 claude --dangerously-skip-permissions
 ```
 
+コンテナ内で Web サーバーなどを動かす場合、アプリは `0.0.0.0` で listen してください。Mac からはコンテナ IP 経由でアクセスします。
+
+```bash
+# コンテナ内
+python3 -m http.server 8000 --bind 0.0.0.0
+
+# Mac 側（デフォルト PORT=8000）
+make open
+
+# ポートを変える場合
+make open PORT=5173
+```
+
 | コマンド | 説明 |
 |----------|------|
 | `make run` | コンテナを作成/起動して zsh に入る |
+| `make open` | コンテナ IP:PORT をブラウザで開く（`PORT` 既定値: 8000） |
 | `make stop` | コンテナを停止する |
 | `make rm` | コンテナを削除する |
 | `make help` | コマンド一覧を表示する |
